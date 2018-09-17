@@ -34,6 +34,16 @@ class Minesweeper_solver:
         self.s[y] += [-1] # -1 = not known
   def add(self, x, y, s):
     self.s[y][x] = s
+  def view(self):
+    for y in self.s:
+      for x in y:
+        if x == -1:
+          x = '?'
+        print(x, end='')
+      print()
 
 s = Minesweeper_solver(10, 10)
-print(s.s)
+s.add(0,0,1)
+s.add(0,2,9)
+s.add(1,3,4)
+s.view()
