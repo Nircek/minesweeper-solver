@@ -42,8 +42,22 @@ class Minesweeper_solver:
         print(x, end='')
       print()
 
+def inp(s,l=True):
+  m = True
+  while m or l:
+    x = input()
+    x = x.split()
+    for i in range(len(x)):
+      x[i] = int(x[i])
+    while len(x):
+      s.add(x[0],x[1],x[2])
+      x = x[3:]
+    m = False
+
 s = Minesweeper_solver(10, 10)
 s.add(0,0,1)
 s.add(0,2,9)
 s.add(1,3,4)
-s.view()
+while 1:
+  s.view()
+  inp(s, False)
