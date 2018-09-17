@@ -31,7 +31,7 @@ class Minesweeper_solver:
     for y in range(H):
       self.s += [[]]
       for x in range(W):
-        self.s[y] += [[]]
+        self.s[y] += [-1] # -1 = not known
 
 s = Minesweeper_solver(10, 10)
 print(s.s)
