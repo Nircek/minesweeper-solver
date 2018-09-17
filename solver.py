@@ -24,3 +24,14 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
+
+class Minesweeper_solver:
+  def __init__(self, W, H):
+    self.s = []
+    for y in range(H):
+      self.s += [[]]
+      for x in range(W):
+        self.s[y] += [[]]
+
+s = Minesweeper_solver(10, 10)
+print(s.s)
