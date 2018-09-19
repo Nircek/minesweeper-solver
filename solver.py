@@ -26,7 +26,7 @@
 # SOFTWARE.
 
 class Minesweeper_solver:
-  self.p = [(-1, -1), (0, -1), (1, -1),
+  p = [(-1, -1), (0, -1), (1, -1),
             (-1,  0), (0,  0), (1, 0) ,
             (-1,  1), (0,  1), (1, 1) ]
   def __init__(self, W, H):
@@ -38,13 +38,17 @@ class Minesweeper_solver:
       for x in range(W):
         self.s[y] += [[-2, 0, 0]] # -2 = not known
   def add(self, x, y, s):
-    self.s[y][x] = s
+    self.s[y][x] = [s, 0, 0]
   def view(self):
     for y in self.s:
       for x in y:
-        if x == -1:
-          x = '?'
-        print(x, end='')
+        if x[0] == -2:
+          x = ['?']
+        elif x[0] == -1:
+          x = ['#']
+        elif x[0] == 0:
+          x = [' ']
+        print(x[0], end='')
       print()
   def get(self, x, y, p=5):
     # 123
