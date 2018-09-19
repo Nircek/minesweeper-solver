@@ -54,12 +54,22 @@ class Minesweeper_solver:
     # 123
     # 456
     # 789
-    x += self.p[p]
-    y += self.p[p]
-    if x<0 or x>=W or y<0 or y>=H:
-      return -1 # -1 = out of range
+    p -= 1
+    x += self.p[p][0]
+    y += self.p[p][1]
+    if x<0 or x>=self.W or y<0 or y>=self.H:
+      return [-1] # -1 = out of range
     return self.s[y][x]
-
+  def set(self, x, y, z, p=5):
+    # 123
+    # 456
+    # 789
+    p -= 1
+    x += self.p[p][0]
+    y += self.p[p][1]
+    if x<0 or x>=self.W or y<0 or y>=self.H:
+      return
+    self.s[y][x] = z
 def inp(s,l=True):
   m = True
   while m or l:
