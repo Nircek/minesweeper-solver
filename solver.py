@@ -48,6 +48,8 @@ class Minesweeper_solver:
           x = ['#']
         elif x[0] == 0:
           x = [' ']
+        elif x[0] == -3:
+          x = ['X']
         print(x[0], end='')
       print()
   def get(self, x, y, p=5):
@@ -69,7 +71,7 @@ class Minesweeper_solver:
     y += self.p[p][1]
     if x<0 or x>=self.W or y<0 or y>=self.H:
       return
-    self.s[y][x] = z
+    self.s[y][x] = [z, 0, 0]
   def update(self):
     b = 0
     ob = -1
@@ -77,26 +79,27 @@ class Minesweeper_solver:
       for y in range(self.H):
         for x in range(self.W):
           bs = 0
-          ps = 0
+          nk = 0
           for p in range(1, 10):
             if p == 5:
               continue
             a = self.get(x, y, p)
-            if a[0] < -1: # not known + bombs
-             ps += 1
-             if a[0] < -2: # bombs
+            if a[0] == -2: # not known
+             nk += 1
+             if a[0] == -3: # bombs
                bs += 1
           self.s[y][x][1] = bs
-          self.s[y][x][2] = ps
-          if bs > ps:
-            print('WARN: impossible')
-          elif bs == ps:
+          self.s[y][x][2] = nk
+          a = self.s[x][y]
+          if a[0]-bs > nk:
+            print('WARN: impossible (x', x, ' y', y, ' a', a, ')', sep='')
+          elif a[0]-bs == nk:
             for p in range(1,10):
               if p == 5:
                 continue
               a = self.get(x, y, p)
-              if a[0] == -1:
-                self.set(x, y, -2, p)
+              if a[0] == -2:
+                self.set(x, y, -3, p)
                 b += 1
       ob = b
 def inp(s,l=True):
