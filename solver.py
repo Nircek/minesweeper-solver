@@ -26,12 +26,17 @@
 # SOFTWARE.
 
 class Minesweeper_solver:
+  self.p = [(-1, -1), (0, -1), (1, -1),
+            (-1,  0), (0,  0), (1, 0) ,
+            (-1,  1), (0,  1), (1, 1) ]
   def __init__(self, W, H):
+    self.W = W
+    self.H = H
     self.s = []
     for y in range(H):
       self.s += [[]]
       for x in range(W):
-        self.s[y] += [-1] # -1 = not known
+        self.s[y] += [[-2, 0, 0]] # -2 = not known
   def add(self, x, y, s):
     self.s[y][x] = s
   def view(self):
@@ -41,6 +46,15 @@ class Minesweeper_solver:
           x = '?'
         print(x, end='')
       print()
+  def get(self, x, y, p=5):
+    # 123
+    # 456
+    # 789
+    x += self.p[p]
+    y += self.p[p]
+    if x<0 or x>=W or y<0 or y>=H:
+      return -1 # -1 = out of range
+    return self.s[y][x]
 
 def inp(s,l=True):
   m = True
