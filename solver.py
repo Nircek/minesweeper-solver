@@ -90,7 +90,7 @@ class Minesweeper_solver:
                bs += 1
           self.s[y][x][1] = bs
           self.s[y][x][2] = nk
-          a = self.s[x][y]
+          a = self.get(x, y)
           if a[0]-bs > nk:
             print('WARN: impossible (x', x, ' y', y, ' a', a, ')', sep='')
           elif a[0]-bs == nk:
