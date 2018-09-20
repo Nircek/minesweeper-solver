@@ -85,9 +85,9 @@ class Minesweeper_solver:
               continue
             a = self.get(x, y, p)
             if a[0] == -2: # not known
-             nk += 1
-             if a[0] == -3: # bombs
-               bs += 1
+              nk += 1
+            if a[0] == -3: # bombs
+              bs += 1
           self.s[y][x][1] = bs
           self.s[y][x][2] = nk
           a = self.get(x, y)
