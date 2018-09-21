@@ -25,6 +25,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+import getch
+
 class Minesweeper_solver:
   p = [(-1, -1), (0, -1), (1, -1),
             (-1,  0), (0,  0), (1, 0) ,
@@ -60,6 +62,8 @@ class Minesweeper_solver:
       self.cur(-1, 0)
     elif k == 'd':
       self.cur(1, 0)
+    elif k == 'c':
+      exit()
   def add(self, x, y, s):
     self.s[y][x] = [s, 0, 0, self.s[y][x][3]]
   def view(self):
@@ -101,7 +105,7 @@ class Minesweeper_solver:
     y += self.p[p][1]
     if x<0 or x>=self.W or y<0 or y>=self.H:
       return
-    self.s[y][x] = [z, 0, 0]
+    self.s[y][x] = [z, 0, 0, u'']
   def update(self):
     b = 0
     ob = -1
@@ -174,4 +178,4 @@ if __name__ == '__main__':
   while 1:
     s.update()
     s.view()
-    inp(s, False)
+    s.key(getch.getch())
