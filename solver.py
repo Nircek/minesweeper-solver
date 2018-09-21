@@ -54,6 +54,7 @@ class Minesweeper_solver:
     self.Y += y
     self.s[self.Y][self.X][3] = self.cursor
   def key(self, k):
+    zero = ord('0')
     if k == 'w':
       self.cur(0, -1)
     elif k == 's':
@@ -64,6 +65,8 @@ class Minesweeper_solver:
       self.cur(1, 0)
     elif k == 'c':
       exit()
+    elif ord(k) >= zero and ord(k) < zero+10:
+      self.set(self.X, self.Y, ord(k)-zero)
   def add(self, x, y, s):
     self.s[y][x] = [s, 0, 0, self.s[y][x][3]]
   def view(self):
