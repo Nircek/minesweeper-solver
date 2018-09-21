@@ -26,6 +26,13 @@
 # SOFTWARE.
 
 import getch
+from os import system, name
+def clear():
+    # src: https://www.geeksforgeeks.org/clear-screen-python/
+    if name == 'nt':
+        system('cls')
+    else:
+        system('clear')
 
 class Minesweeper_solver:
   p = [(-1, -1), (0, -1), (1, -1),
@@ -70,6 +77,7 @@ class Minesweeper_solver:
   def add(self, x, y, s):
     self.s[y][x] = [s, 0, 0, self.s[y][x][3]]
   def view(self):
+    clear()
     for y in self.s:
       for x in y:
         c = x
