@@ -50,6 +50,8 @@ class Minesweeper_solver:
           x = [' ']
         elif x[0] == -3:
           x = ['X']
+        elif x[0] == -4:
+          x = ['@']
         print(x[0], end='')
       print()
   def get(self, x, y, p=5):
@@ -97,10 +99,17 @@ class Minesweeper_solver:
             for p in range(1,10):
               if p == 5:
                 continue
-              a = self.get(x, y, p)
-              if a[0] == -2:
+              c = self.get(x, y, p)
+              if c[0] == -2:
                 self.set(x, y, -3, p)
                 b += 1
+          elif a[0] == bs:
+            for p in range(1,10):
+              if p == 5:
+                continue
+              c = self.get(x, y, p)
+              if c[0] == -2:
+                self.set(x, y, -4, p) # -4 = clear
       ob = b
 def inp(s,l=True):
   m = True
