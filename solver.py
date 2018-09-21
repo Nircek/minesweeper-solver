@@ -29,19 +29,43 @@ class Minesweeper_solver:
   p = [(-1, -1), (0, -1), (1, -1),
             (-1,  0), (0,  0), (1, 0) ,
             (-1,  1), (0,  1), (1, 1) ]
+  cursor = u'\u001b[31m'
   def __init__(self, W, H):
     self.W = W
     self.H = H
+    self.color = True
     self.s = []
     for y in range(H):
       self.s += [[]]
       for x in range(W):
-        self.s[y] += [[-2, 0, 0]] # -2 = not known
+        self.s[y] += [[-2, 0, 0, u'']] # -2 = not known
+    self.X = 0
+    self.Y = 0
+    self.cur(0,0)
+  def cur(self, x, y):
+    X = self.X + x
+    Y = self.Y + y
+    if X<0 or X>=self.W or Y<0 or Y>=self.H:
+      return
+    self.s[self.Y][self.X][3] = u''
+    self.X += x
+    self.Y += y
+    self.s[self.Y][self.X][3] = self.cursor
+  def key(self, k):
+    if k == 'w':
+      self.cur(0, -1)
+    elif k == 's':
+      self.cur(0, 1)
+    elif k == 'a':
+      self.cur(-1, 0)
+    elif k == 'd':
+      self.cur(1, 0)
   def add(self, x, y, s):
-    self.s[y][x] = [s, 0, 0]
+    self.s[y][x] = [s, 0, 0, self.s[y][x][3]]
   def view(self):
     for y in self.s:
       for x in y:
+        c = x
         if x[0] == -2:
           x = ['?']
         elif x[0] == -1:
@@ -52,7 +76,11 @@ class Minesweeper_solver:
           x = ['X']
         elif x[0] == -4:
           x = ['@']
+        if self.color and len(c)>=4:
+          print(c[3], end='')
         print(x[0], end='')
+        if self.color:
+          print(u'\u001b[0m',end='')
       print()
   def get(self, x, y, p=5):
     # 123
