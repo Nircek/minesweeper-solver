@@ -74,7 +74,7 @@ class Minesweeper_solver:
       for x in y:
         c = x
         if x[0] == -2:
-          x = ['?']
+          x = ['.']
         elif x[0] == -1:
           x = ['#']
         elif x[0] == 0:
@@ -160,24 +160,6 @@ def inp(s,l=True):
 
 if __name__ == '__main__':
   s = Minesweeper_solver(10, 10)
-  s.add(1,0,1)
-  s.add(1,1,2)
-  s.add(1,2,2)
-  s.add(2,2,1)
-  s.add(2,3,1)
-  s.add(2,4,2)
-  s.add(3,4,1)
-  s.add(4,4,1)
-  s.add(4,3,1)
-  s.add(4,2,1)
-  s.add(4,1,1)
-  s.add(4,0,1)
-  s.add(2,0,0)
-  s.add(2,1,0)
-  s.add(3,0,0)
-  s.add(3,1,0)
-  s.add(3,2,0)
-  s.add(3,3,0)
   while 1:
     s.update()
     s.view()
