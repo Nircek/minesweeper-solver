@@ -31,7 +31,7 @@ class Minesweeper_solver:
   p = [(-1, -1), (0, -1), (1, -1),
             (-1,  0), (0,  0), (1, 0) ,
             (-1,  1), (0,  1), (1, 1) ]
-  cursor = u'\u001b[31m'
+  cursor = u'\u001b[41m'
   def __init__(self, W, H):
     self.W = W
     self.H = H
