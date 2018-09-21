@@ -27,6 +27,7 @@
 
 import getch
 from os import system, name
+import random
 def clear():
     # src: https://www.geeksforgeeks.org/clear-screen-python/
     if name == 'nt':
@@ -154,6 +155,21 @@ class Minesweeper_solver:
               if c[0] == -2:
                 self.set(x, y, -4, p) # -4 = clear
       ob = b
+    for y in range(self.H):
+      for x in range(self.W):
+        if self.get(x,y)[0] == -4:
+          return
+    rnd = []
+    for y in range(self.H):
+      for x in range(self.W):
+        if self.get(x,y)[0] == -2:
+          rnd += [(x,y)]
+    if len(rnd) == 0:
+      return
+    rndc = random.choice(rnd)
+    self.set(rndc[0],rndc[1],-4)
+
+
 def inp(s,l=True):
   m = True
   while m or l:
