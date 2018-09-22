@@ -85,15 +85,15 @@ class Minesweeper_solver:
       for x in y:
         c = x
         if x[0] == -2:
-          x = ['.']
+          x = [u'\u001b[37m.']
         elif x[0] == -1:
           x = ['#']
         elif x[0] == 0:
           x = [' ']
         elif x[0] == -3:
-          x = ['X']
+          x = [u'\u001b[91mX']
         elif x[0] == -4:
-          x = ['@']
+          x = [u'\u001b[92m@']
         if self.color and len(c)>=4:
           print(c[3], end='')
         print(x[0], end='')
