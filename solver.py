@@ -189,6 +189,8 @@ class Minesweeper_solver:
       return
     jj = [0]*len(rnd)
     for i in range(2**len(rnd)):
+      if i%len(rnd) == 0:
+        print(u'\u001b[1000D',len(rnd),' ',100*i/2**len(rnd), '%',sep='', end='              ')
       m = Minesweeper_solver(self.W, self.H)
       m.s = deepcopy(self.s)
       ij = []
