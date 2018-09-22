@@ -75,8 +75,10 @@ class Minesweeper_solver:
       self.cur(1, 0)
     elif k == 'c':
       exit()
-    elif ord(k) >= zero and ord(k) < zero+10:
+    elif ord(k) >= zero and ord(k) < zero+9:
       self.set(self.X, self.Y, ord(k)-zero)
+    elif ord(k) == zero+9:
+      self.set(self.X, self.Y, -2)
   def add(self, x, y, s):
     self.s[y][x] = [s, 0, 0, self.s[y][x][3]]
   def view(self, clr=True):
