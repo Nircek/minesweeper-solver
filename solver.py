@@ -188,24 +188,45 @@ class Minesweeper_solver:
     if len(rnd) == 0:
       return
     jj = [0]*len(rnd)
-    for i in range(2**len(rnd)):
-      if i%len(rnd) == 0:
-        print(u'\u001b[1000D',len(rnd),' ',100*i/2**len(rnd), '%',sep='', end='              ')
-      m = Minesweeper_solver(self.W, self.H)
-      m.s = deepcopy(self.s)
-      ij = []
-      for j in range(len(rnd)):
-        ii = i%2
-        i //= 2
-        ij += [ii]
-      for j in range(len(rnd)):
-        if ij[j]:
-          m.set(rnd[j][0],rnd[j][1],-3)
-      # m.view(False)
-      # print(ij, m.good())
-      if m.good():
+    if len(rnd) < 15:
+      for i in range(2**len(rnd)):
+        if i%len(rnd) == 0:
+          print(u'\u001b[1000D',len(rnd),' ',100*i/2**len(rnd), '%',sep='', end='              ')
+        m = Minesweeper_solver(self.W, self.H)
+        m.s = deepcopy(self.s)
+        ij = []
         for j in range(len(rnd)):
-          jj[j] += ij[j]
+          ii = i%2
+          i //= 2
+          ij += [ii]
+        for j in range(len(rnd)):
+          if ij[j]:
+            m.set(rnd[j][0],rnd[j][1],-3)
+        # m.view(False)
+        # print(ij, m.good())
+        if m.good():
+          for j in range(len(rnd)):
+            jj[j] += ij[j]
+    else:
+      for i in range(2**14):
+        if i%len(rnd) == 0:
+          print(u'\u001b[1000D',len(rnd),' ',100*i/2**14, '%',sep='', end='              ')
+        i = random.randrange(2**len(rnd))
+        m = Minesweeper_solver(self.W, self.H)
+        m.s = deepcopy(self.s)
+        ij = []
+        for j in range(len(rnd)):
+          ii = i%2
+          i //= 2
+          ij += [ii]
+        for j in range(len(rnd)):
+          if ij[j]:
+            m.set(rnd[j][0],rnd[j][1],-3)
+        # m.view(False)
+        # print(ij, m.good())
+        if m.good():
+          for j in range(len(rnd)):
+            jj[j] += ij[j]
     # print(rnd)
     # print(jj)
     # input()
