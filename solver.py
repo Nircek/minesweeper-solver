@@ -226,8 +226,11 @@ def inp(s,l=True):
       x = x[3:]
     m = False
 
+def inInt(msg):
+  return int(input(msg))
+
 if __name__ == '__main__':
-  s = Minesweeper_solver(10, 10)
+  s = Minesweeper_solver(inInt('WIDTH: '), inInt('HEIGHT: '))
   while 1:
     s.update()
     s.view()
