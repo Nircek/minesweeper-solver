@@ -28,6 +28,7 @@
 import getch
 from os import system, name
 import random
+from copy import deepcopy
 def clear():
     # src: https://www.geeksforgeeks.org/clear-screen-python/
     if name == 'nt':
@@ -77,8 +78,9 @@ class Minesweeper_solver:
       self.set(self.X, self.Y, ord(k)-zero)
   def add(self, x, y, s):
     self.s[y][x] = [s, 0, 0, self.s[y][x][3]]
-  def view(self):
-    clear()
+  def view(self, clr=True):
+    if clr:
+      clear()
     for y in self.s:
       for x in y:
         c = x
@@ -98,6 +100,19 @@ class Minesweeper_solver:
         if self.color:
           print(u'\u001b[0m',end='')
       print()
+  def good(self):
+    for y in range(self.H):
+      for x in range(self.W):
+        a = self.get(x,y)[0]
+        if a < 0:
+          continue
+        b = 0
+        for p in range(1, 10):
+          if self.get(x,y,p)[0] == -3:
+            b += 1
+        if a != b:
+          return False
+    return True
   def get(self, x, y, p=5):
     # 123
     # 456
@@ -163,10 +178,37 @@ class Minesweeper_solver:
     for y in range(self.H):
       for x in range(self.W):
         if self.get(x,y)[0] == -2:
+          tb = True
+          for p in range(1,10):
+           if self.get(x,y,p)[0] > -1:
+             tb = False
+          if tb:
+            continue
           rnd += [(x,y)]
     if len(rnd) == 0:
       return
-    rndc = random.choice(rnd)
+    jj = [0]*len(rnd)
+    for i in range(2**len(rnd)):
+      m = Minesweeper_solver(self.W, self.H)
+      m.s = deepcopy(self.s)
+      ij = []
+      for j in range(len(rnd)):
+        ii = i%2
+        i //= 2
+        ij += [ii]
+      for j in range(len(rnd)):
+        if ij[j]:
+          m.set(rnd[j][0],rnd[j][1],-3)
+      # m.view(False)
+      # print(ij, m.good())
+      if m.good():
+        for j in range(len(rnd)):
+          jj[j] += ij[j]
+    # print(rnd)
+    # print(jj)
+    # input()
+    rndc = rnd[jj.index(min(jj))]
+    # rndc = random.choice(rnd)
     self.set(rndc[0],rndc[1],-4)
 
 
