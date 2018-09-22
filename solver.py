@@ -53,6 +53,7 @@ class Minesweeper_solver:
     self.X = 0
     self.Y = 0
     self.cur(0,0)
+    self.msg = ''
   def cur(self, x, y):
     X = self.X + x
     Y = self.Y + y
@@ -100,6 +101,9 @@ class Minesweeper_solver:
         if self.color:
           print(u'\u001b[0m',end='')
       print()
+    if self.msg:
+      print(self.msg)
+      self.msg = ''
   def good(self):
     for y in range(self.H):
       for x in range(self.W):
@@ -233,6 +237,10 @@ class Minesweeper_solver:
     rndc = rnd[jj.index(min(jj))]
     # rndc = random.choice(rnd)
     self.set(rndc[0],rndc[1],-4)
+    if max(jj) == 0:
+      self.msg = '0/0 0%'
+    else:
+      self.msg = str(min(jj)) + '/' + str(max(jj)) + ' ' + str(int(1000*min(jj)/max(jj))/10) + '%'
 
 
 def inp(s,l=True):
