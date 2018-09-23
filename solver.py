@@ -64,6 +64,8 @@ class Minesweeper_solver:
     self.Y += y
     self.s[self.Y][self.X][3] = self.cursor
   def key(self, k):
+    if isinstance(k, (bytes, bytearray)):
+      k = k.decode()
     zero = ord('0')
     if k == 'w':
       self.cur(0, -1)
