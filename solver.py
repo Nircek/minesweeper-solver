@@ -29,12 +29,6 @@ import getch
 from os import system, name
 import random
 from copy import deepcopy
-def clear():
-    # src: https://www.geeksforgeeks.org/clear-screen-python/
-    if name == 'nt':
-        system('cls')
-    else:
-        system('clear')
 
 class Minesweeper_solver:
   p = [(-1, -1), (0, -1), (1, -1),
@@ -83,7 +77,7 @@ class Minesweeper_solver:
     self.s[y][x] = [s, 0, 0, self.s[y][x][3]]
   def view(self, clr=True):
     if clr:
-      clear()
+        print('\033[2J') # clear screen
     for y in self.s:
       for x in y:
         c = x
@@ -191,48 +185,30 @@ class Minesweeper_solver:
           if tb:
             continue
           rnd += [(x,y)]
-    if len(rnd) == 0:
+    if not rnd:
       return
     jj = [0]*len(rnd)
-    if len(rnd) < 15:
-      for i in range(2**len(rnd)):
-        if i%len(rnd) == 0:
-          print(u'\u001b[1000D',len(rnd),' ',100*i/2**len(rnd), '%',sep='', end='              ')
-        m = Minesweeper_solver(self.W, self.H)
-        m.s = deepcopy(self.s)
-        ij = []
+    overflow = len(rnd) < 15
+    n = len(rnd) if overflow else 14
+    for i in range(2**n):
+    if i%len(rnd) == 0:
+        print(u'\u001b[1000D',n,' ',100*i/2**len(rnd), '%',sep='', end='              ')
+    i = random.randrange(2**len(rnd)) if overflow else i
+    m = Minesweeper_solver(self.W, self.H)
+    m.s = deepcopy(self.s)
+    ij = []
+    for j in rnd:
+        ii = i%2
+        i //= 2
+        ij += [ii]
+    for j, e in enumerate(rnd):
+        if ij[j]:
+        m.set(e[0],e[1],-3)
+    # m.view(False)
+    # print(ij, m.good())
+    if m.good():
         for j in range(len(rnd)):
-          ii = i%2
-          i //= 2
-          ij += [ii]
-        for j in range(len(rnd)):
-          if ij[j]:
-            m.set(rnd[j][0],rnd[j][1],-3)
-        # m.view(False)
-        # print(ij, m.good())
-        if m.good():
-          for j in range(len(rnd)):
-            jj[j] += ij[j]
-    else:
-      for i in range(2**14):
-        if i%len(rnd) == 0:
-          print(u'\u001b[1000D',len(rnd),' ',100*i/2**14, '%',sep='', end='              ')
-        i = random.randrange(2**len(rnd))
-        m = Minesweeper_solver(self.W, self.H)
-        m.s = deepcopy(self.s)
-        ij = []
-        for j in range(len(rnd)):
-          ii = i%2
-          i //= 2
-          ij += [ii]
-        for j in range(len(rnd)):
-          if ij[j]:
-            m.set(rnd[j][0],rnd[j][1],-3)
-        # m.view(False)
-        # print(ij, m.good())
-        if m.good():
-          for j in range(len(rnd)):
-            jj[j] += ij[j]
+        jj[j] += ij[j]
     # print(rnd)
     # print(jj)
     # input()
@@ -250,9 +226,9 @@ def inp(s,l=True):
   while m or l:
     x = input()
     x = x.split()
-    for i in range(len(x)):
-      x[i] = int(x[i])
-    while len(x):
+    for i, e in enumerate(x):
+      x[i] = int(e)
+    while x:
       s.add(x[0],x[1],x[2])
       x = x[3:]
     m = False
